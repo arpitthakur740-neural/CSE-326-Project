@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<!-- HTML5 document: the page content is written in English. -->
+<html lang="en">
+<head>
+  <!-- Character encoding: helps the browser display text and symbols correctly. -->
+  <meta charset="UTF-8">
+  <!-- Responsive viewport: helps the page fit mobile and desktop screens. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RoadGuard | Road Damage Reporting</title>
+  <!-- Loads the CSS file that controls the website design and layout. -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- SIDEBAR: branding, navigation links and the guest profile. -->
+  <aside class="sidebar">
+    <a class="brand" href="#" data-page="overview">
+      <span class="brand-icon">╱</span>
+      <span>RoadGuard<small>CIVIC RESPONSE</small></span>
+    </a>
+
+    <p class="nav-label">WORKSPACE</p>
+    <!-- NAVIGATION: each button identifies the page section to display. -->
+    <nav>
+      <button class="nav-item active" data-page="overview">▦ &nbsp; Overview</button>
+      <button class="nav-item" data-page="reports">◎ &nbsp; Road reports <span id="reportCount">0</span></button>
+      <button class="nav-item" data-page="new-report">＋ &nbsp; Submit a report</button>
+    </nav>
+
+    <div class="sidebar-note">
+      <span class="online-dot"></span>
+      <div><strong>Community watch</strong>
+      <p>Every report helps make our roads safer.</p></div>
+    </div>
+    <div class="profile"><span>RG</span><div><strong>Guest citizen</strong><small>Community member</small></div></div>
+  </aside>
+
+  <!-- MAIN CONTENT: the top bar and the three main website sections. -->
+  <main class="main">
+    <header class="topbar">
+      <button id="menuButton" class="menu-button">☰</button>
+      <div>Workspace <span class="muted">/</span> <strong id="breadcrumb">Overview</strong></div>
+      <span class="demo-label">● DEMO ENVIRONMENT</span>
+    </header>
+
+    <!-- OVERVIEW DASHBOARD: a summary of community road reports. -->
+    <!-- OVERVIEW -->
+    <section class="page active" id="overview">
+      <div class="page-heading">
+        <div>
+          <p class="eyebrow">CIVIC INFRASTRUCTURE · COMMUNITY SAFETY</p>
+          <h1>Road safety starts <span>with us.</span></h1>
+          <p class="muted">Spot a problem. Report it. Help your community move forward.</p>
+        </div>
+        <button class="primary-button" data-page="new-report">＋ Report road damage</button>
+      </div>
+
+      <!-- HERO PANEL: introduces the service and offers a shortcut to submit a report. -->
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="gold-label">✳ &nbsp; YOUR REPORT MAKES A DIFFERENCE</p>
+          <h2>Better roads are<br>a <span>shared responsibility.</span></h2>
+          <p>Help identify hazards, prioritise repairs and keep every journey safer.</p>
+          <button class="light-button" data-page="new-report">Create a report ↗</button>
+        </div>
+        <div class="road-illustration" aria-hidden="true">
+          <div class="sun"></div>
+          <div class="hill hill-one"></div>
+          <div class="hill hill-two"></div>
+          <div class="road"></div>
+          <div class="road-line"></div>
+          <div class="road-pin pin-one">!</div>
+          <div class="road-pin pin-two">!</div>
+          <span class="art-caption">COMMUNITY-POWERED REPAIRS</span>
+        </div>
+      </section>
+
+      <div class="section-heading">
+        <div><h2>Community overview</h2><p class="muted">A snapshot of recorded reports.</p></div>
+        <button class="text-button" data-page="reports">View all reports →</button>
+      </div>
+
+      <!-- STAT CARDS: show totals for reports and their progress statuses. -->
+      <div class="stats-grid">
+        <article class="stat-card"><p>Total reports</p><div id="totalStat" class="stat-number">0</div><small>All submissions</small></article>
+        <article class="stat-card"><p>Awaiting review</p><div id="reviewStat" class="stat-number">0</div><small>Needs assessment</small></article>
+        <article class="stat-card"><p>In progress</p><div id="progressStat" class="stat-number">0</div><small>Repair work underway</small></article>
+        <article class="stat-card"><p>Resolved issues</p><div id="resolvedStat" class="stat-number">0</div><small>Marked as resolved</small></article>
+      </div>
+
+      <div class="content-grid">
+        <section class="panel">
+          <div class="panel-heading"><div><h3>Recent road reports</h3><p class="muted">Latest community submissions</p></div></div>
+          <div id="recentReports"></div>
+          <button class="text-button" data-page="reports">Explore report register →</button>
+        </section>
+        <section class="panel">
+          <div class="panel-heading"><div><h3>Priority watch</h3><p class="muted">Unresolved road hazards</p></div><span class="live-tag">LIVE</span></div>
+          <div id="priorityReports"></div>
+          <div class="safety-note"><strong>Safety first.</strong> For an immediate hazard, contact the relevant local authority or emergency services.</div>
+        </section>
+      </div>
+    </section>
+
+    <!-- REPORT REGISTER: search and filter reports in a table. -->
+    <!-- REPORT REGISTER -->
+    <section class="page" id="reports">
+      <div class="page-heading">
+        <div><p class="eyebrow">TRACK AND REVIEW</p><h1>Road reports</h1><p class="muted">Search submissions and follow their repair progress.</p></div>
+        <button class="primary-button" data-page="new-report">＋ New report</button>
+      </div>
+
+      <section class="panel table-panel">
+        <div class="toolbar">
+          <input id="searchInput" type="search" placeholder="Search ID, title or location...">
+          <select id="statusFilter">
+            <option value="all">All statuses</option>
+            <option>Submitted</option>
+            <option>Under Review</option>
+            <option>In Progress</option>
+            <option>Resolved</option>
+          </select>
+          <select id="severityFilter">
+            <option value="all">All priorities</option>
+            <option>High</option><option>Medium</option><option>Low</option>
+          </select>
+        </div>
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th>REPORT</th><th>LOCATION</th><th>PRIORITY</th><th>STATUS</th><th>DATE</th><th>ACTION</th></tr></thead>
+            <tbody id="reportTable"></tbody>
+          </table>
+        </div>
+        <div class="table-footer" id="tableFooter"></div>
+      </section>
+    </section>
+
+    <!-- REPORT FORM: collects the information about a road-damage incident. -->
+    <!-- NEW REPORT FORM -->
+    <section class="page" id="new-report">
+      <div class="page-heading">
+        <div><p class="eyebrow">COMMUNITY CONTRIBUTION</p><h1>Report road damage</h1><p class="muted">Provide clear details to help assess the issue.</p></div>
+      </div>
+
+      <div class="form-layout">
+        <!-- FORM CONTAINER: groups the fields that the user completes before submission. -->
+        <form class="panel report-form" id="reportForm">
+          <div class="form-section"><span>01</span><div><h3>Damage details</h3><p class="muted">Describe what you observed.</p></div></div>
+
+          <!-- A short, required title describing the road problem. -->
+          <label for="title">Report title <b>*</b></label>
+          <input id="title" maxlength="70" required placeholder="e.g. Deep pothole near main crossing">
+
+          <div class="field-row">
+            <div><label for="type">Type of damage <b>*</b></label>
+              <!-- DAMAGE TYPE: a dropdown list of possible road problems. -->
+              <select id="type" required>
+                <option value="">Select damage type</option>
+                <option>Pothole</option><option>Road crack</option>
+                <option>Broken road surface</option><option>Waterlogging</option>
+                <option>Damaged manhole</option><option>Other hazard</option>
+              </select>
+            </div>
+            <div><label for="severity">Severity <b>*</b></label>
+              <!-- SEVERITY: lets the user classify the risk as high, medium or low. -->
+              <select id="severity" required>
+                <option value="">Assess severity</option>
+                <option>High</option><option>Medium</option><option>Low</option>
+              </select>
+            </div>
+          </div>
+
+          <label for="description">Description <b>*</b></label>
+          <!-- DESCRIPTION: a required explanation, limited to 500 characters. -->
+          <textarea id="description" rows="4" maxlength="500" required placeholder="Describe the damage, traffic impact and nearby landmarks..."></textarea>
+          <div class="field-hint"><span>Provide specific details.</span><span id="charCount">0 / 500</span></div>
+
+          <hr>
+          <div class="form-section"><span>02</span><div><h3>Location and evidence</h3><p class="muted">Help the response team find the spot.</p></div></div>
+
+          <!-- LOCATION: identifies where the reported damage can be found. -->
+          <label for="location">Road / location <b>*</b></label>
+          <input id="location" maxlength="120" required placeholder="Street, area, city or nearby landmark">
+
+          <div class="field-row">
+            <div><label for="reporter">Your name</label><input id="reporter" maxlength="60" placeholder="Optional"></div>
+            <!-- DATE INPUT: records when the damage was observed. -->
+            <div><label for="date">Date observed</label><input id="date" type="date" required></div>
+          </div>
+
+          <label for="photo">Photograph evidence <span class="muted">(optional)</span></label>
+          <div class="upload-box">
+            <!-- PHOTO INPUT: allows an image to be attached as supporting evidence. -->
+            <input id="photo" type="file" accept="image/*">
+            <p>Upload a photograph of the road damage.</p>
+            <small>JPG, PNG or WEBP · Maximum 2 MB</small>
+            <img id="photoPreview" alt="Road damage preview" hidden>
+          </div>
+
+          <div class="form-actions">
+            <button type="button" class="secondary-button" data-page="overview">Cancel</button>
+            <!-- SUBMIT BUTTON: hands the form data to the JavaScript code. -->
+            <button type="submit" class="primary-button">Submit report →</button>
+          </div>
+        </form>
+
+        <!-- SIDE GUIDE: explains the severity levels and the prototype privacy limitation. -->
+        <aside class="panel guide-panel">
+          <h3>Severity guide</h3>
+          <p class="muted">Select a priority based on the observed risk.</p>
+          <div class="guide-item"><span class="severity-dot high"></span><div><strong>High</strong><small>Immediate safety concern</small></div></div>
+          <div class="guide-item"><span class="severity-dot medium"></span><div><strong>Medium</strong><small>Significant road disruption</small></div></div>
+          <div class="guide-item"><span class="severity-dot low"></span><div><strong>Low</strong><small>Minor damage or deterioration</small></div></div>
+          <hr>
+          <h3>Privacy notice</h3>
+          <p class="muted">This student prototype stores reports in the current browser. It does not transmit information to a real municipal authority.</p>
+        </aside>
+      </div>
+    </section>
+
+    <!-- FOOTER: identifies the RoadGuard project and course assessment. -->
+    <footer class="footer"><span>ROADGUARD · COMMUNITY INFRASTRUCTURE RESPONSE</span><span>CSE 326 CA1 PROJECT</span></footer>
+  </main>
+
+  <!-- DETAILS DIALOG: popup container used to show a selected report. -->
+  <dialog id="detailsDialog"><button id="closeDialog" class="close-dialog" aria-label="Close">×</button><div id="dialogBody"></div></dialog>
+  <!-- TOAST: reserved area for short status or confirmation messages. -->
+  <div id="toast" role="status"></div>
+  <!-- Loads JavaScript for navigation, form handling and dynamic page updates. -->
+  <script src="script.js"></script>
+</body>
+</html>
